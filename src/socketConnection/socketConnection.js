@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
 import {
   setElements,
+  setToolType,
   updateElement,
 } from "../components/Whiteboard/whiteboardSlice";
 import store from "../store/store";
@@ -15,15 +16,23 @@ export const connectWithSocketServer = () => {
   });
 
   socket.on("whiteboard-state", (elements) => {
-    console.log("Drawing on load", elements);
     store.dispatch(setElements(elements));
   });
 
   socket.on("element-update", (updatedElement) => {
     store.dispatch(updateElement(updatedElement));
   });
+
+  socket.on("clear-whiteboard", () => {
+    store.dispatch(setElements([]));
+    store.dispatch(setToolType(null));
+  });
 };
 
 export const emitElementUpdate = (elementData) => {
   socket.emit("element-update", elementData);
+};
+
+export const clearWhiteboard = () => {
+  socket.emit("clear-whiteboard");
 };
