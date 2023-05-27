@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   tool: null,
-  elements: []
+  elements: [],
 };
 
 const whiteboardSlice = createSlice({
@@ -14,19 +14,22 @@ const whiteboardSlice = createSlice({
     },
     updateElement: (state, action) => {
       const { id } = action.payload;
-      
-      const index = state.elements.findIndex((el)=> el.id === id);
-      
-      if(index === -1) {
+
+      const index = state.elements.findIndex((el) => el.id === id);
+
+      if (index === -1) {
         state.elements.push(action.payload);
       } else {
-        // TODO: if element exists, update existing element
+        state.elements[index] = action.payload;
       }
-      
-    }
-  }
+    },
+    setElements: (state, action) => {
+      state.elements = action.payload;
+    },
+  },
 });
 
-export const { setToolType, updateElement } = whiteboardSlice.actions;
+export const { setToolType, updateElement, setElements } =
+  whiteboardSlice.actions;
 
 export default whiteboardSlice.reducer;
