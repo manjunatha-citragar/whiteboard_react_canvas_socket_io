@@ -46,18 +46,20 @@ export const updateElement = (
       break;
 
     case toolTypes.TEXT:
-      // const textWidth = document
-      //   .getElementById("canvas")
-      //   .getContext("2d")
-      //   .measureText(text).width;
+      const textWidth = document
+        .getElementById("canvas")
+        .getContext("2d")
+        .measureText(text).width;
 
-      const textHeight = 17;
+      const textHeight = 5;
 
       elementsCopy[index] = {
         ...createElement({
           id,
-          x1: x1,
-          y1: y1 + textHeight,
+          x1,
+          y1,
+          x2: x1 + textWidth,
+          y2: y1 + textHeight,
           toolType: type,
           text,
         }),

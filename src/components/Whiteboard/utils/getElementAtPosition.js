@@ -27,6 +27,11 @@ const positionWithinelement = (x, y, element) => {
 
       return topLeft || topRight || bottomLeft || bottomRight || inside;
 
+    case toolTypes.TEXT:
+      return x + 15 > x1 && x <= x2 && y + 15 >= y1 && y <= y2
+        ? cursorPositions.INSIDE
+        : null;
+
     default:
       throw new Error("positionWithinelement tooltype not found!!");
   }
