@@ -46,10 +46,10 @@ export const updateElement = (
       break;
 
     case toolTypes.TEXT:
-      const textWidth = document
-        .getElementById("canvas")
-        .getContext("2d")
-        .measureText(text).width;
+      // const textWidth = document
+      //   .getElementById("canvas")
+      //   .getContext("2d")
+      //   .measureText(text).width;
 
       const textHeight = 17;
 

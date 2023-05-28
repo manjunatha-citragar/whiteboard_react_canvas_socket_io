@@ -13,7 +13,7 @@ const whiteboardSlice = createSlice({
       state.tool = action.payload;
     },
     updateElement: (state, action) => {
-      const { id } = action.payload;
+      const { id } = action.payload || { id: 0 };
 
       const index = state.elements.findIndex((el) => el.id === id);
 
