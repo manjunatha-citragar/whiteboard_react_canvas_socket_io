@@ -5,7 +5,7 @@ import { setElements } from "../whiteboardSlice";
 import { createElement } from "./createElement";
 
 export const updateElement = (
-  { id, x1, x2, y1, y2, type, index },
+  { id, x1, x2, y1, y2, type, text = "", index },
   elements
 ) => {
   const elementsCopy = [...elements];
@@ -43,6 +43,32 @@ export const updateElement = (
       store.dispatch(setElements(elementsCopy));
       emitElementUpdate(updatdElementCopy);
 
+      break;
+
+    case toolTypes.TEXT:
+      const textWidth = document
+        .getElementById("canvas")
+        .getContext("2d")
+        .measureText(text).width;
+
+      const textHeight = 24;
+
+      elementsCopy[index] = {
+        ...createElement({
+          id,
+          x1,
+          y1,
+          x2: x1 + textWidth,
+          y2: y1 + textHeight,
+          toolType: type,
+          text,
+        }),
+      };
+
+      const updatedTextElement = elementsCopy[index];
+      store.dispatch(setElements(elementsCopy));
+
+      emitElementUpdate(updatedTextElement);
       break;
     default:
       throw new Error("Something went wrong when updating element");
