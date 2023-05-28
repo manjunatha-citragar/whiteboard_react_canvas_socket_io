@@ -56,7 +56,6 @@ const Whiteboard = () => {
     const { clientX, clientY } = event;
 
     if (selectedElement && action === actions.WRITING) {
-      console.log("returning on handleMouseDown");
       return;
     }
 
