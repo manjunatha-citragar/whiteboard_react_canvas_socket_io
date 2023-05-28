@@ -6,6 +6,7 @@ import lineIcon from "../../resources/icons/line.svg";
 import rubberIcon from "../../resources/icons/rubber.svg";
 import pencilIcon from "../../resources/icons/pencil.svg";
 import textIcon from "../../resources/icons/text.svg";
+import selectionIcon from "../../resources/icons/cursor-selection.svg";
 import { setElements, setToolType } from "./whiteboardSlice";
 import { clearWhiteboard } from "../../socketConnection/socketConnection";
 
@@ -44,6 +45,7 @@ const Menu = () => {
       <IconButton src={rubberIcon} type={toolTypes.RUBBER} isRubber />
       <IconButton src={pencilIcon} type={toolTypes.PENCIL} />
       <IconButton src={textIcon} type={toolTypes.TEXT} />
+      <IconButton src={selectionIcon} type={toolTypes.SELECTION} />
     </div>
   );
 };
