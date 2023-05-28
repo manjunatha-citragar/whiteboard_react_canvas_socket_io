@@ -15,7 +15,7 @@ const drawPencilElement = (element, context) => {
 };
 
 const drawTextElement = (element, context) => {
-  context.texBaseline = "bottom";
+  context.texBaseline = "top";
   context.font = "24px sans-serif";
   context.fillText(element.text, element.x1, element.y1);
 };

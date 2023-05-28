@@ -51,15 +51,13 @@ export const updateElement = (
         .getContext("2d")
         .measureText(text).width;
 
-      const textHeight = 24;
+      const textHeight = 17;
 
       elementsCopy[index] = {
         ...createElement({
           id,
-          x1,
-          y1,
-          x2: x1 + textWidth,
-          y2: y1 + textHeight,
+          x1: x1,
+          y1: y1 + textHeight,
           toolType: type,
           text,
         }),
