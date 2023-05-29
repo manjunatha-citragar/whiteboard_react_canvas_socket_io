@@ -52,6 +52,24 @@ const positionWithinelement = (x, y, element) => {
 
       return on || start || end;
 
+    case toolTypes.PENCIL:
+      const betweenAnyPoint = element.points.some((point, index) => {
+        const nextPoint = element.points[index + 1];
+        if (!nextPoint) return false;
+
+        return onLine({
+          x1: point.x,
+          y1: point.y,
+          x2: nextPoint.x,
+          y2: nextPoint.y,
+          x,
+          y,
+          maxDistance: 5,
+        });
+      });
+
+      return betweenAnyPoint ? cursorPositions.INSIDE : null;
+
     default:
       throw new Error("positionWithinelement tooltype not found!!");
   }
