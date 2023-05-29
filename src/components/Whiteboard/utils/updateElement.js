@@ -4,6 +4,23 @@ import store from "../../../store/store";
 import { setElements } from "../whiteboardSlice";
 import { createElement } from "./createElement";
 
+export const updatePencilElementWhenMoving = (
+  { index, newPoints },
+  elements
+) => {
+  const elementsCopy = [...elements];
+
+  elementsCopy[index] = {
+    ...elementsCopy[index],
+    points: newPoints,
+  };
+
+  const updatedPencilElement = elementsCopy[index];
+
+  store.dispatch(setElements(elementsCopy));
+  emitElementUpdate(updatedPencilElement);
+};
+
 export const updateElement = (
   { id, x1, x2, y1, y2, type, text = "", index },
   elements
@@ -46,18 +63,20 @@ export const updateElement = (
       break;
 
     case toolTypes.TEXT:
-      // const textWidth = document
-      //   .getElementById("canvas")
-      //   .getContext("2d")
-      //   .measureText(text).width;
+      const textWidth = document
+        .getElementById("canvas")
+        .getContext("2d")
+        .measureText(text).width;
 
-      const textHeight = 17;
+      const textHeight = 5;
 
       elementsCopy[index] = {
         ...createElement({
           id,
-          x1: x1,
-          y1: y1 + textHeight,
+          x1,
+          y1,
+          x2: x1 + textWidth,
+          y2: y1 + textHeight,
           toolType: type,
           text,
         }),

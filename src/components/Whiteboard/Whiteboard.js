@@ -14,6 +14,7 @@ import {
   getElementAtPosition,
   getCursorForPosition,
   getResizedCoordinates,
+  updatePencilElementWhenMoving,
 } from "./utils";
 import { updateElement as updateElementInStore } from "./whiteboardSlice";
 
@@ -101,7 +102,12 @@ const Whiteboard = () => {
       case toolTypes.SELECTION:
         element = getElementAtPosition(clientX, clientY, elements);
 
-        if (element && element.type === toolTypes.RECTANGLE) {
+        if (
+          element &&
+          (element.type === toolTypes.RECTANGLE ||
+            element.type === toolTypes.TEXT ||
+            element.type === toolTypes.LINE)
+        ) {
           setAction(
             element.position === cursorPositions.INSIDE
               ? actions.MOVING
@@ -112,6 +118,15 @@ const Whiteboard = () => {
           const offsetY = clientY - element.y1;
 
           setSelectedElement({ ...element, offsetX, offsetY });
+        }
+
+        if (element && element.type === toolTypes.PENCIL) {
+          setAction(actions.MOVING);
+
+          const xOffsets = element.points.map((point) => clientX - point.x);
+          const yOffsets = element.points.map((point) => clientY - point.y);
+
+          setSelectedElement({ ...element, xOffsets, yOffsets });
         }
 
         break;
@@ -183,11 +198,32 @@ const Whiteboard = () => {
     }
 
     if (
+      selectedElement &&
+      toolType === toolTypes.SELECTION &&
+      action === actions.MOVING &&
+      selectedElement.type === toolTypes.PENCIL
+    ) {
+      const newPoints = selectedElement.points.map((_, index) => ({
+        x: clientX - selectedElement.xOffsets[index],
+        y: clientY - selectedElement.yOffsets[index],
+      }));
+
+      const index = elements.findIndex((el) => el.id === selectedElement.id);
+
+      if (index !== -1) {
+        updatePencilElementWhenMoving({ index, newPoints }, elements);
+      }
+
+      return;
+    }
+
+    if (
       toolType === toolTypes.SELECTION &&
       action === actions.MOVING &&
       selectedElement
     ) {
-      const { id, x1, x2, y1, y2, type, offsetX, offsetY } = selectedElement;
+      const { id, x1, x2, y1, y2, type, offsetX, offsetY, text } =
+        selectedElement;
 
       const width = x2 - x1;
       const height = y2 - y1;
@@ -207,6 +243,7 @@ const Whiteboard = () => {
             y2: newY1 + height,
             type,
             index,
+            text,
           },
           elements
         );
