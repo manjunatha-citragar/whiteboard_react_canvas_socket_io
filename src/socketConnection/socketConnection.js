@@ -4,6 +4,10 @@ import {
   setToolType,
   updateElement,
 } from "../components/Whiteboard/whiteboardSlice";
+import {
+  removeCursor,
+  updateCursorPosition,
+} from "../CursorOverlay/cursorSlice";
 import store from "../store/store";
 
 let socket;
@@ -27,6 +31,14 @@ export const connectWithSocketServer = () => {
     store.dispatch(setElements([]));
     store.dispatch(setToolType(null));
   });
+
+  socket.on("cursor-position", (cursorData) => {
+    store.dispatch(updateCursorPosition(cursorData));
+  });
+
+  socket.on("user-disconnected", (userId) => {
+    store.dispatch(removeCursor(userId));
+  });
 };
 
 export const emitElementUpdate = (elementData) => {
@@ -35,4 +47,8 @@ export const emitElementUpdate = (elementData) => {
 
 export const clearWhiteboard = () => {
   socket.emit("clear-whiteboard");
+};
+
+export const emitCursorPosition = (cursorData) => {
+  socket.emit("cursor-position", cursorData);
 };

@@ -17,6 +17,10 @@ import {
   updatePencilElementWhenMoving,
 } from "./utils";
 import { updateElement as updateElementInStore } from "./whiteboardSlice";
+import { emitCursorPosition } from "../../socketConnection/socketConnection";
+
+let emitCursor = true;
+let lastCursorPosition;
 
 const Whiteboard = () => {
   const canvasRef = useRef();
@@ -169,6 +173,18 @@ const Whiteboard = () => {
 
   const handleMouseMove = (event) => {
     const { clientX, clientY } = event;
+
+    lastCursorPosition = { x: clientX, y: clientY };
+
+    if (emitCursor) {
+      emitCursorPosition({ x: clientX, y: clientY });
+      emitCursor = false;
+
+      setTimeout(() => {
+        emitCursor = true;
+        emitCursorPosition(lastCursorPosition);
+      }, 50);
+    }
 
     if (action === actions.DRAWING) {
       const index = elements.findIndex((ele) => ele.id === selectedElement.id);
