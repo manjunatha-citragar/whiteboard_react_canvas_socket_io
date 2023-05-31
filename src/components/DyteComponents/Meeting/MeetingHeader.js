@@ -16,10 +16,15 @@ const MeetingHeader = () => {
 
   return (
     <>
-      <DyteHeader style={{ width: "100%" }}>
-        <div className="dyte-row-flex">
-          <DyteMeetingTitle meeting={meeting} />
-        </div>
+      <DyteHeader
+        style={{
+          position: "absolute",
+          right: "10px",
+          display: "flex",
+          justifyContent: "end",
+          width: "100%",
+        }}
+      >
         <DyteRecordingIndicator meeting={meeting} />
         <DyteClock meeting={meeting} />
       </DyteHeader>
@@ -27,6 +32,13 @@ const MeetingHeader = () => {
       <DyteParticipantTile
         participant={meeting.self}
         nameTagPosition="bottom-center"
+        style={{
+          position: "absolute",
+          top: 10,
+          left: 10,
+          height: 150,
+          width: 250,
+        }}
       >
         <DyteNameTag participant={meeting.self}>
           <DyteAudioVisualizer slot="start" />

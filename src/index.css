@@ -5,7 +5,7 @@ body {
 
 .menu-container {
   position: absolute;
-  top: 0;
+  top: 5px;
   left: calc(50% - 175px);
   width: 350px;
   border-bottom-left-radius: 15px;

@@ -14,7 +14,9 @@ const MeetingFooter = () => {
 
   return (
     <>
-      <DyteControlbar style={{ width: "100%" }}>
+      <DyteControlbar
+        style={{ position: "absolute", bottom: "10px", width: "100%" }}
+      >
         <div className="dyte-row-flex">
           <DyteMicToggle meeting={meeting} />
           <DyteCameraToggle meeting={meeting} />

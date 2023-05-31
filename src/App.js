@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import { connectWithSocketServer } from "./socketConnection/socketConnection";
-import { DyteProvider, useDyteClient } from "@dytesdk/react-web-core";
+import {
+  DyteProvider,
+  useDyteClient,
+  useDyteSelector,
+} from "@dytesdk/react-web-core";
 import { CustomDyteMeeting } from "./components/DyteComponents/CustomDyteMeeting";
 
 function App() {
   const [meeting, initMeeting] = useDyteClient();
 
   useEffect(() => {
-    connectWithSocketServer();
-
     const searchParams = new URL(window.location.href).searchParams;
 
     const authToken = searchParams.get("authToken");
