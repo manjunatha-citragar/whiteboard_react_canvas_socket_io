@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
-import { connectWithSocketServer } from "./socketConnection/socketConnection";
-import {
-  DyteProvider,
-  useDyteClient,
-  useDyteSelector,
-} from "@dytesdk/react-web-core";
+import { DyteProvider, useDyteClient } from "@dytesdk/react-web-core";
 import { CustomDyteMeeting } from "./components/DyteComponents/CustomDyteMeeting";
+import { handleWhiteboardEvents } from "./components/Whiteboard/utils";
 
 function App() {
   const [meeting, initMeeting] = useDyteClient();
@@ -28,6 +24,8 @@ function App() {
         audio: false,
         video: false,
       },
+    }).then((meeting) => {
+      handleWhiteboardEvents(meeting);
     });
   }, [initMeeting]);
 

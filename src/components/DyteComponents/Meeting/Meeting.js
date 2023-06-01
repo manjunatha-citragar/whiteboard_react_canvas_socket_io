@@ -5,14 +5,9 @@ import MeetingHeader from "./MeetingHeader";
 import MeetingFooter from "./MeetingFooter";
 import Whiteboard from "../../Whiteboard/Whiteboard";
 import CursorOverlay from "../../../CursorOverlay/CursorOverlay";
-import { connectWithSocketServer } from "../../../socketConnection/socketConnection";
 
 const Meeting = () => {
   const mainEl = useRef(null);
-
-  useEffect(() => {
-    connectWithSocketServer();
-  }, []);
 
   useEffect(() => {
     if (!mainEl.current) return;

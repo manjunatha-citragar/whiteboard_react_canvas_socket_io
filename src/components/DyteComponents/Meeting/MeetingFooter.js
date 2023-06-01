@@ -3,14 +3,32 @@ import {
   DyteControlbar,
   DyteLeaveButton,
   DyteMicToggle,
-  DyteRecordingToggle,
 } from "@dytesdk/react-ui-kit";
 import { useDyteMeeting } from "@dytesdk/react-web-core";
-import React from "react";
+import React, { useState } from "react";
+import IconButton from "../../Whiteboard/IconButton";
 import "./style.css";
+import recordIcon from "../../../resources/icons/record.svg";
+import { startRecording, stopRecording } from "../utils";
 
 const MeetingFooter = () => {
   const { meeting } = useDyteMeeting();
+  const [recording, setRecording] = useState(false);
+  const [recordingId, setRecordingId] = useState();
+
+  const searchParams = new URL(window.location.href).searchParams;
+
+  const meetingId = searchParams.get("meetingId");
+
+  const handleRecord = () => {
+    if (!recording) {
+      startRecording({ meetingId, setRecordingId });
+      setRecording(true);
+    } else {
+      stopRecording({ meetingId, recordingId });
+      setRecording(false);
+    }
+  };
 
   return (
     <>
@@ -20,8 +38,8 @@ const MeetingFooter = () => {
         <div className="dyte-row-flex">
           <DyteMicToggle meeting={meeting} />
           <DyteCameraToggle meeting={meeting} />
-          <DyteRecordingToggle meeting={meeting} size="sm" />
-          <DyteLeaveButton />
+          <IconButton src={recordIcon} onClick={handleRecord} />
+          <DyteLeaveButton size="sm" meeting={meeting} />
         </div>
       </DyteControlbar>
     </>
