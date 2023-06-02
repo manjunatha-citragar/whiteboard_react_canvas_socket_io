@@ -84,6 +84,11 @@ const Whiteboard = () => {
       return;
     }
 
+    if (!toolType) {
+      console.warn("Tool type not selected from Tools menu!!");
+      return;
+    }
+
     switch (toolType) {
       case toolTypes.RECTANGLE:
       case toolTypes.LINE:

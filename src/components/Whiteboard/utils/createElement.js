@@ -14,6 +14,11 @@ const generateLine = ({ x1, x2, y1, y2 }) => {
 export const createElement = ({ x1, x2, y1, y2, toolType, id, text = "" }) => {
   let roughElement;
 
+  if (!toolType) {
+    console.warn("Tool type not available while Creating element");
+    return;
+  }
+
   switch (toolType) {
     case toolTypes.RECTANGLE:
       roughElement = generatorRectangle({ x1, x2, y1, y2 });

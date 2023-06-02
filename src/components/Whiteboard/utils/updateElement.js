@@ -32,6 +32,11 @@ export const updateElement = (
 ) => {
   const elementsCopy = [...elements];
 
+  if (!type) {
+    console.warn("Tool type not available while Updating element");
+    return;
+  }
+
   switch (type) {
     case toolTypes.RECTANGLE:
     case toolTypes.LINE:
