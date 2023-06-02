@@ -8,3 +8,4 @@ export { getElementAtPosition } from "./getElementAtPosition";
 export { getCursorForPosition } from "./getCursorForPosition";
 export { getResizedCoordinates } from "./getResizedCoordinates";
 export { handleWhiteboardEvents } from "./handleWhiteboardEvents";
+export { adjustCoordinatesToResolution } from "./adjustCoordinatesToResolution";
