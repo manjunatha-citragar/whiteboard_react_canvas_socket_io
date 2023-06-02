@@ -22,11 +22,9 @@ const MeetingFooter = () => {
 
   const handleRecord = () => {
     if (!recording) {
-      startRecording({ meetingId, setRecordingId });
-      setRecording(true);
+      startRecording({ meetingId, setRecordingId, setRecording });
     } else {
-      stopRecording({ meetingId, recordingId });
-      setRecording(false);
+      stopRecording({ recordingId, setRecording });
     }
   };
 
@@ -39,6 +37,7 @@ const MeetingFooter = () => {
           <DyteMicToggle meeting={meeting} />
           <DyteCameraToggle meeting={meeting} />
           <IconButton src={recordIcon} onClick={handleRecord} />
+          <span>{recording ? "Stop Recording" : "Start Recording"}</span>
           <DyteLeaveButton size="sm" meeting={meeting} />
         </div>
       </DyteControlbar>

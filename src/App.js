@@ -12,7 +12,7 @@ function App() {
     const authToken = searchParams.get("authToken");
 
     if (!authToken) {
-      alert(
+      console.warn(
         "An authToken wasn't passed, please pass an authToken in the URL query to join a meeting."
       );
       return;

@@ -2,7 +2,7 @@ import axios from "axios";
 
 const RECORDING_BASE_URL = "https://api.cluster.dyte.in/v2/recordings";
 
-export const startRecording = ({ meetingId, setRecordingId }) => {
+export const startRecording = ({ meetingId, setRecordingId, setRecording }) => {
   const data = {
     meeting_id: meetingId,
 
@@ -22,17 +22,16 @@ export const startRecording = ({ meetingId, setRecordingId }) => {
       },
     })
     .then((response) => {
-      // Handle success response
-      console.log("Started Recording:", response.data);
-      setRecordingId(response.data.id);
+      setRecordingId(response?.data?.data?.id);
+      setRecording(true);
+      console.log("Started recording with ID:", response?.data?.data?.id);
     })
     .catch((error) => {
-      // Handle error
       console.error(error);
     });
 };
 
-export const stopRecording = ({ meetingId, recordingId }) => {
+export const stopRecording = ({ recordingId, setRecording }) => {
   const url = `https://api.cluster.dyte.in/v2/recordings/${recordingId}`;
 
   const data = {
@@ -49,12 +48,11 @@ export const stopRecording = ({ meetingId, recordingId }) => {
         password: password,
       },
     })
-    .then((response) => {
-      // Handle success response
-      console.log("Recording Stopped:", response.data);
+    .then((_) => {
+      setRecording(false);
+      console.log("Stopped recording!!");
     })
     .catch((error) => {
-      // Handle error
       console.error(error);
     });
 };
