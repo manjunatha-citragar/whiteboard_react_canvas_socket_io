@@ -52,7 +52,7 @@ const Whiteboard = () => {
   }, [elements]);
 
   const emitCursorPosition = (cursorData, meeting) => {
-    meeting.participants.broadcastMessage("ID3", {
+    meeting.participants.broadcastMessage("ID3Data", {
       data: cursorData,
       id: meeting.self.id,
       type: whiteboardEvents.UPDATE_CURSOR_POSITION,

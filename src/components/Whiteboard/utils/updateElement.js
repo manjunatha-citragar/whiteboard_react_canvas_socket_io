@@ -18,7 +18,7 @@ export const updatePencilElementWhenMoving = (
   const updatedPencilElement = elementsCopy[index];
 
   store.dispatch(setElements(elementsCopy));
-  meeting.participants.broadcastMessage("ID3", {
+  meeting.participants.broadcastMessage("ID3Data", {
     data: updatedPencilElement,
     type: whiteboardEvents.UPDATE_ELEMENT,
     id: meeting.self.id,
@@ -51,7 +51,7 @@ export const updateElement = (
 
       elementsCopy[index] = updatedElement;
       store.dispatch(setElements(elementsCopy));
-      meeting.participants.broadcastMessage("ID3", {
+      meeting.participants.broadcastMessage("ID3Data", {
         data: updatedElement,
         id: meeting.self.id,
         type: whiteboardEvents.UPDATE_ELEMENT,
@@ -72,7 +72,7 @@ export const updateElement = (
 
       const updatdElementCopy = elementsCopy[index];
       store.dispatch(setElements(elementsCopy));
-      meeting.participants.broadcastMessage("ID3", {
+      meeting.participants.broadcastMessage("ID3Data", {
         data: updatdElementCopy,
         type: whiteboardEvents.UPDATE_ELEMENT,
         id: meeting.self.id,
@@ -102,7 +102,7 @@ export const updateElement = (
       const updatedTextElement = elementsCopy[index];
       store.dispatch(setElements(elementsCopy));
 
-      meeting.participants.broadcastMessage("ID3", {
+      meeting.participants.broadcastMessage("ID3Data", {
         data: updatedTextElement,
         type: whiteboardEvents.UPDATE_ELEMENT,
         id: meeting.self.id,

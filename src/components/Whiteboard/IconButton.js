@@ -18,7 +18,7 @@ const IconButton = ({ src, type, isRubber, onClick }) => {
   const handleClearBoard = () => {
     dispatch(setElements([]));
     dispatch(setToolType(null));
-    meeting.participants.broadcastMessage("ID3", {
+    meeting.participants.broadcastMessage("ID3Data", {
       id: meeting.self.id,
       type: whiteboardEvents.CLEAR_WHITEBOARD,
     });

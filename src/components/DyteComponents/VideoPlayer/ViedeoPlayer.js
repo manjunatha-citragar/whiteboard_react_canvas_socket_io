@@ -4,16 +4,6 @@ import Hls from "hls.js";
 const VideoPlayer = ({ videoUrl }) => {
   const videoRef = useRef(null);
 
-  useEffect(() => {
-    videoRef.current.addEventListener("timeupdate", handleTimeUpdateListener);
-    return () => {
-      videoRef.current.removeEventListener(
-        "timeupdate",
-        handleTimeUpdateListener
-      );
-    };
-  }, []);
-
   const handleTimeUpdateListener = (_) => {
     const textTrackListCount = videoRef.current.textTracks.length;
     let metaTextTrack;
@@ -38,7 +28,8 @@ const VideoPlayer = ({ videoUrl }) => {
         continue;
       }
       const metaData = cue.value.data;
-      console.log("Meatadata extracted from Player:", metaData);
+      console.log(metaData);
+      console.log("<-------------------------------------------------->");
       cue.fired = true;
       cueIndex++;
     }
@@ -60,11 +51,16 @@ const VideoPlayer = ({ videoUrl }) => {
     };
 
     initPlayer();
+    videoRef.current.addEventListener("timeupdate", handleTimeUpdateListener);
 
     return () => {
       if (hls) {
         hls.destroy();
       }
+      videoRef.current.removeEventListener(
+        "timeupdate",
+        handleTimeUpdateListener
+      );
     };
   }, [videoUrl]);
 
