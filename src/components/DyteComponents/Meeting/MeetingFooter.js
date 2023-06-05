@@ -10,6 +10,7 @@ import IconButton from "../../Whiteboard/IconButton";
 import "./style.css";
 import recordIcon from "../../../resources/icons/record.svg";
 import { startRecording, stopRecording } from "../utils";
+import { useSelector } from "react-redux";
 
 const MeetingFooter = () => {
   const { meeting } = useDyteMeeting();
@@ -19,6 +20,10 @@ const MeetingFooter = () => {
   const searchParams = new URL(window.location.href).searchParams;
 
   const meetingId = searchParams.get("meetingId");
+
+  const playRecordedSession = useSelector(
+    (state) => state.whiteboard.playRecordedSession
+  );
 
   const handleRecord = () => {
     if (!recording) {
@@ -30,17 +35,19 @@ const MeetingFooter = () => {
 
   return (
     <>
-      <DyteControlbar
-        style={{ position: "absolute", bottom: "10px", width: "100%" }}
-      >
-        <div className="dyte-row-flex">
-          <DyteMicToggle meeting={meeting} />
-          <DyteCameraToggle meeting={meeting} />
-          <IconButton src={recordIcon} onClick={handleRecord} />
-          <span>{recording ? "Stop Recording" : "Start Recording"}</span>
-          <DyteLeaveButton size="sm" meeting={meeting} />
-        </div>
-      </DyteControlbar>
+      {!playRecordedSession && (
+        <DyteControlbar
+          style={{ position: "absolute", bottom: "10px", width: "100%" }}
+        >
+          <div className="dyte-row-flex">
+            <DyteMicToggle meeting={meeting} />
+            <DyteCameraToggle meeting={meeting} />
+            <IconButton src={recordIcon} onClick={handleRecord} />
+            <span>{recording ? "Stop Recording" : "Start Recording"}</span>
+            <DyteLeaveButton size="sm" meeting={meeting} />
+          </div>
+        </DyteControlbar>
+      )}
     </>
   );
 };

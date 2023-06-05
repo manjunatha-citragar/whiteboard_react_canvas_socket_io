@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { DyteButton, DyteMeeting } from "@dytesdk/react-ui-kit";
+import React from "react";
 import { useDyteMeeting, useDyteSelector } from "@dytesdk/react-web-core";
 import Setup from "./Setup/Setup";
 import Meeting from "./Meeting/Meeting";

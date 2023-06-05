@@ -54,7 +54,7 @@ const VideoPlayer = ({ videoUrl }) => {
     };
   }, [videoUrl]);
 
-  return <video ref={videoRef} height={250} width={250} controls autoPlay />;
+  return <video ref={videoRef} height={250} width={250} style={{position: "absolute"}} controls autoPlay />;
 };
 
 export default VideoPlayer;
