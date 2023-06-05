@@ -1,14 +1,12 @@
 import { DyteButton } from "@dytesdk/react-ui-kit";
 import { useDyteMeeting } from "@dytesdk/react-web-core";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { setIsSessionRecording } from "../../Whiteboard/whiteboardSlice";
 import applyDesign from "../utils/applyDesign";
-import VideoPlayer from "../VideoPlayer/ViedeoPlayer";
 
 const Setup = () => {
   const { meeting } = useDyteMeeting();
   const buttonEl = useRef(null);
-  const [playRecodedSession, setPlayRecordedSession] = useState(false);
-  const videoUrl = "https://627zx1-3000.csb.app/recordings/out.m3u8";
 
   useEffect(() => {
     if (!buttonEl.current) return;
@@ -28,18 +26,25 @@ const Setup = () => {
       }}
     >
       <p>You haven't joined the room yet.</p>
-      <DyteButton ref={buttonEl} onClick={() => meeting.joinRoom()}>
+      <DyteButton
+        ref={buttonEl}
+        onClick={() => {
+          setIsSessionRecording(false);
+          meeting.joinRoom();
+        }}
+      >
         Join Room
       </DyteButton>
 
       <DyteButton
         style={{ marginTop: "10px" }}
-        onClick={() => setPlayRecordedSession(true)}
+        onClick={() => {
+          setIsSessionRecording(true);
+          meeting.joinRoom();
+        }}
       >
         Play recorded video
       </DyteButton>
-
-      {playRecodedSession && <VideoPlayer videoUrl={videoUrl} />}
     </div>
   );
 };
