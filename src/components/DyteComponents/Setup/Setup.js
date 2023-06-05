@@ -1,12 +1,14 @@
 import { DyteButton } from "@dytesdk/react-ui-kit";
 import { useDyteMeeting } from "@dytesdk/react-web-core";
 import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { setIsSessionRecording } from "../../Whiteboard/whiteboardSlice";
 import applyDesign from "../utils/applyDesign";
 
 const Setup = () => {
   const { meeting } = useDyteMeeting();
   const buttonEl = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!buttonEl.current) return;
@@ -29,7 +31,7 @@ const Setup = () => {
       <DyteButton
         ref={buttonEl}
         onClick={() => {
-          setIsSessionRecording(false);
+          dispatch(setIsSessionRecording(false));
           meeting.joinRoom();
         }}
       >
@@ -39,7 +41,7 @@ const Setup = () => {
       <DyteButton
         style={{ marginTop: "10px" }}
         onClick={() => {
-          setIsSessionRecording(true);
+          dispatch(setIsSessionRecording(true));
           meeting.joinRoom();
         }}
       >

@@ -9,3 +9,4 @@ export { getCursorForPosition } from "./getCursorForPosition";
 export { getResizedCoordinates } from "./getResizedCoordinates";
 export { handleWhiteboardEvents } from "./handleWhiteboardEvents";
 export { adjustCoordinatesToResolution } from "./adjustCoordinatesToResolution";
+export { updateLocalStore } from "./updateLocalStore";

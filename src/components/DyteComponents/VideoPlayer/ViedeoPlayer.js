@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import Hls from "hls.js";
+import { updateLocalStore } from "../../Whiteboard/utils";
 
 const VideoPlayer = ({ videoUrl }) => {
   const videoRef = useRef(null);
@@ -40,6 +41,7 @@ const VideoPlayer = ({ videoUrl }) => {
       metaTextTrack.oncuechange = (event) => {
         let cue = metaTextTrack.activeCues[metaTextTrack.activeCues.length - 1];
         console.log(cue.value.data);
+        updateLocalStore(JSON.parse(cue.value.data));
       };
     };
 
@@ -52,7 +54,7 @@ const VideoPlayer = ({ videoUrl }) => {
     };
   }, [videoUrl]);
 
-  return <video ref={videoRef} height={400} width={400} controls autoPlay />;
+  return <video ref={videoRef} height={250} width={250} controls autoPlay />;
 };
 
 export default VideoPlayer;

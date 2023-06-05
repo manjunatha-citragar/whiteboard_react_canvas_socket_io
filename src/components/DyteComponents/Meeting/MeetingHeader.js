@@ -36,6 +36,8 @@ const MeetingHeader = () => {
         <DyteClock meeting={meeting} />
       </DyteHeader>
       {playRecordedSession ? (
+        <VideoPlayer videoUrl={videoUrl} />
+      ) : (
         <DyteParticipantTile
           participant={meeting.self}
           nameTagPosition="bottom-center"
@@ -43,7 +45,7 @@ const MeetingHeader = () => {
             position: "absolute",
             top: 10,
             left: 10,
-            height: 150,
+            height: 250,
             width: 250,
           }}
         >
@@ -51,8 +53,6 @@ const MeetingHeader = () => {
             <DyteAudioVisualizer slot="start" />
           </DyteNameTag>
         </DyteParticipantTile>
-      ) : (
-        <VideoPlayer videoUrl={videoUrl} />
       )}
     </>
   );
