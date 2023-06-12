@@ -29,6 +29,13 @@ const distance = (a, b) => {
 const positionWithinelement = (x, y, element) => {
   const { type, x1, x2, y1, y2 } = element;
 
+  if (!type) {
+    console.warn(
+      "Tool type not available while retreiving element's position!"
+    );
+    return;
+  }
+
   switch (type) {
     case toolTypes.RECTANGLE:
       const topLeft = nearPoint(x, y, x1, y1, cursorPositions.TOP_LEFT);

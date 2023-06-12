@@ -21,6 +21,10 @@ const drawTextElement = (element, context) => {
 };
 
 export const drawElement = ({ roughCanvas, element, context }) => {
+  if (!element.type) {
+    console.warn("Element type not available while Drawing element");
+    return;
+  }
   switch (element.type) {
     case toolTypes.RECTANGLE:
     case toolTypes.LINE:

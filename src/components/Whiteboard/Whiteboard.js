@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Menu from "./Menu";
 
 import rough from "roughjs/bundled/rough.esm";
-import { actions, cursorPositions, toolTypes } from "../../constants";
+import {
+  actions,
+  cursorPositions,
+  toolTypes,
+  whiteboardEvents,
+} from "../../constants";
 import { v4 as uuid } from "uuid";
 import {
   createElement,
@@ -17,7 +22,7 @@ import {
   updatePencilElementWhenMoving,
 } from "./utils";
 import { updateElement as updateElementInStore } from "./whiteboardSlice";
-import { emitCursorPosition } from "../../socketConnection/socketConnection";
+import { useDyteMeeting } from "@dytesdk/react-web-core";
 
 let emitCursor = true;
 let lastCursorPosition;
@@ -28,6 +33,7 @@ const Whiteboard = () => {
   const toolType = useSelector((state) => state.whiteboard.tool);
   const elements = useSelector((state) => state.whiteboard.elements);
   const dispatch = useDispatch();
+  const { meeting } = useDyteMeeting();
 
   const [action, setAction] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
@@ -45,6 +51,14 @@ const Whiteboard = () => {
     });
   }, [elements]);
 
+  const emitCursorPosition = (cursorData, meeting) => {
+    meeting.participants.broadcastMessage("ID3Data", {
+      data: cursorData,
+      id: meeting.self.id,
+      type: whiteboardEvents.UPDATE_CURSOR_POSITION,
+    });
+  };
+
   const handleTextAreaBlur = (event) => {
     const { id, x1, y1, type } = selectedElement;
 
@@ -53,7 +67,8 @@ const Whiteboard = () => {
     if (index !== -1) {
       updateElement(
         { id, x1, y1, type, text: event?.target?.value, index },
-        elements
+        elements,
+        meeting
       );
       setAction(null);
       setSelectedElement(null);
@@ -66,6 +81,11 @@ const Whiteboard = () => {
     let element;
 
     if (selectedElement && action === actions.WRITING) {
+      return;
+    }
+
+    if (!toolType) {
+      console.warn("Tool type not selected from Tools menu!!");
       return;
     }
 
@@ -161,7 +181,8 @@ const Whiteboard = () => {
               y2,
               type: selectedElement.type,
             },
-            elements
+            elements,
+            meeting
           );
         }
       }
@@ -177,12 +198,12 @@ const Whiteboard = () => {
     lastCursorPosition = { x: clientX, y: clientY };
 
     if (emitCursor) {
-      emitCursorPosition({ x: clientX, y: clientY });
+      emitCursorPosition({ x: clientX, y: clientY }, meeting);
       emitCursor = false;
 
       setTimeout(() => {
         emitCursor = true;
-        emitCursorPosition(lastCursorPosition);
+        emitCursorPosition(lastCursorPosition, meeting);
       }, 50);
     }
 
@@ -200,7 +221,8 @@ const Whiteboard = () => {
             type: elements[index].type,
             index,
           },
-          elements
+          elements,
+          meeting
         );
       }
     }
@@ -227,7 +249,7 @@ const Whiteboard = () => {
       const index = elements.findIndex((el) => el.id === selectedElement.id);
 
       if (index !== -1) {
-        updatePencilElementWhenMoving({ index, newPoints }, elements);
+        updatePencilElementWhenMoving({ index, newPoints }, elements, meeting);
       }
 
       return;
@@ -261,7 +283,8 @@ const Whiteboard = () => {
             index,
             text,
           },
-          elements
+          elements,
+          meeting
         );
       }
     }
@@ -293,7 +316,8 @@ const Whiteboard = () => {
             type,
             index,
           },
-          elements
+          elements,
+          meeting
         );
       }
     }

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   tool: null,
   elements: [],
+  playRecordedSession: false,
 };
 
 const whiteboardSlice = createSlice({
@@ -26,10 +27,18 @@ const whiteboardSlice = createSlice({
     setElements: (state, action) => {
       state.elements = action.payload;
     },
+    setIsSessionRecording: (state, action) => {
+      console.log("Session Recording:", action.payload);
+      state.playRecordedSession = action.payload;
+    },
   },
 });
 
-export const { setToolType, updateElement, setElements } =
-  whiteboardSlice.actions;
+export const {
+  setToolType,
+  updateElement,
+  setElements,
+  setIsSessionRecording,
+} = whiteboardSlice.actions;
 
 export default whiteboardSlice.reducer;
