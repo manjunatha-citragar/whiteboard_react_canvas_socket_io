@@ -19,7 +19,8 @@ const MeetingFooter = () => {
 
   const searchParams = new URL(window.location.href).searchParams;
 
-  const meetingId = searchParams.get("meetingId");
+  const meetingId =
+    searchParams.get("meetingId") || "bbb8736c-b64d-4927-bc4e-96949535d912";
 
   const playRecordedSession = useSelector(
     (state) => state.whiteboard.playRecordedSession

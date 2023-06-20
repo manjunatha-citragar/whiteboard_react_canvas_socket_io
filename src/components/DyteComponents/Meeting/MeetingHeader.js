@@ -2,7 +2,6 @@ import {
   DyteAudioVisualizer,
   DyteClock,
   DyteHeader,
-  DyteMeetingTitle,
   DyteNameTag,
   DyteParticipantTile,
   DyteRecordingIndicator,
@@ -19,7 +18,7 @@ const MeetingHeader = () => {
     (state) => state.whiteboard.playRecordedSession
   );
 
-  const videoUrl = "https://627zx1-3000.csb.app/recordings/out.m3u8";
+  const videoUrl = "https://ylj8kk-3000.csb.app/recordings/out.m3u8";
 
   return (
     <>
