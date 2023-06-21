@@ -2,9 +2,11 @@ import { whiteboardEvents } from "../../../constants";
 import { updateCursorPosition } from "../../../CursorOverlay/cursorSlice";
 import store from "../../../store/store";
 import { setElements, setToolType, updateElement } from "../whiteboardSlice";
+import { deserializeData } from "./deserializeData";
 
 export const handleWhiteboardEvents = (meeting) => {
   meeting.participants.on("broadcastedMessage", ({ _, payload }) => {
+    payload = deserializeData(payload);
     if (
       payload?.id !== meeting.self.id &&
       payload.type === whiteboardEvents.UPDATE_ELEMENT

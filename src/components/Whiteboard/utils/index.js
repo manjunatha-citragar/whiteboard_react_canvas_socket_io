@@ -10,3 +10,5 @@ export { getResizedCoordinates } from "./getResizedCoordinates";
 export { handleWhiteboardEvents } from "./handleWhiteboardEvents";
 export { adjustCoordinatesToResolution } from "./adjustCoordinatesToResolution";
 export { updateLocalStore } from "./updateLocalStore";
+export { serializeData } from "./serializeData";
+export { deserializeData } from "./deserializeData";

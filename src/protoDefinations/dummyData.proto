@@ -1,0 +1,14 @@
+package whiteboard;
+
+syntax = "proto3";
+
+message DummyProto {
+
+    message Data {
+        string name = 1;
+    }
+
+    string id = 1;
+    string type = 2;
+    Data data = 3;
+}

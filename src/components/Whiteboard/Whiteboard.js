@@ -20,6 +20,7 @@ import {
   getCursorForPosition,
   getResizedCoordinates,
   updatePencilElementWhenMoving,
+  serializeData,
 } from "./utils";
 import { updateElement as updateElementInStore } from "./whiteboardSlice";
 import { useDyteMeeting } from "@dytesdk/react-web-core";

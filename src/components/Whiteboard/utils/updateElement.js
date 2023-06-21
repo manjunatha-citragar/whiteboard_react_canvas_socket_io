@@ -2,6 +2,7 @@ import { toolTypes, whiteboardEvents } from "../../../constants";
 import store from "../../../store/store";
 import { setElements } from "../whiteboardSlice";
 import { createElement } from "./createElement";
+import { serializeData } from "./serializeData";
 
 export const updatePencilElementWhenMoving = (
   { index, newPoints },
@@ -18,11 +19,14 @@ export const updatePencilElementWhenMoving = (
   const updatedPencilElement = elementsCopy[index];
 
   store.dispatch(setElements(elementsCopy));
-  meeting.participants.broadcastMessage("ID3Data", {
-    data: updatedPencilElement,
-    type: whiteboardEvents.UPDATE_ELEMENT,
-    id: meeting.self.id,
-  });
+  meeting.participants.broadcastMessage(
+    "ID3Data",
+    serializeData({
+      data: updatedPencilElement,
+      type: whiteboardEvents.UPDATE_ELEMENT,
+      id: meeting.self.id,
+    })
+  );
 };
 
 export const updateElement = (
@@ -51,11 +55,14 @@ export const updateElement = (
 
       elementsCopy[index] = updatedElement;
       store.dispatch(setElements(elementsCopy));
-      meeting.participants.broadcastMessage("ID3Data", {
-        data: updatedElement,
-        id: meeting.self.id,
-        type: whiteboardEvents.UPDATE_ELEMENT,
-      });
+      meeting.participants.broadcastMessage(
+        "ID3Data",
+        serializeData({
+          data: updatedElement,
+          id: meeting.self.id,
+          type: whiteboardEvents.UPDATE_ELEMENT,
+        })
+      );
 
       break;
     case toolTypes.PENCIL:
@@ -72,11 +79,14 @@ export const updateElement = (
 
       const updatdElementCopy = elementsCopy[index];
       store.dispatch(setElements(elementsCopy));
-      meeting.participants.broadcastMessage("ID3Data", {
-        data: updatdElementCopy,
-        type: whiteboardEvents.UPDATE_ELEMENT,
-        id: meeting.self.id,
-      });
+      meeting.participants.broadcastMessage(
+        "ID3Data",
+        serializeData({
+          data: updatdElementCopy,
+          type: whiteboardEvents.UPDATE_ELEMENT,
+          id: meeting.self.id,
+        })
+      );
       break;
 
     case toolTypes.TEXT:
@@ -102,11 +112,14 @@ export const updateElement = (
       const updatedTextElement = elementsCopy[index];
       store.dispatch(setElements(elementsCopy));
 
-      meeting.participants.broadcastMessage("ID3Data", {
-        data: updatedTextElement,
-        type: whiteboardEvents.UPDATE_ELEMENT,
-        id: meeting.self.id,
-      });
+      meeting.participants.broadcastMessage(
+        "ID3Data",
+        serializeData({
+          data: updatedTextElement,
+          type: whiteboardEvents.UPDATE_ELEMENT,
+          id: meeting.self.id,
+        })
+      );
       break;
     default:
       throw new Error("Something went wrong when updating element");
