@@ -1,6 +1,5 @@
 import {
   DyteAudioVisualizer,
-  DyteButton,
   DyteClock,
   DyteHeader,
   DyteNameTag,
@@ -12,8 +11,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import VideoPlayer from "../VideoPlayer/ViedeoPlayer";
 import "./style.css";
-import { serializeData } from "../../Whiteboard/utils";
-import dummyData from "../../../data/dummyData.json";
 
 const MeetingHeader = () => {
   const { meeting } = useDyteMeeting();
@@ -22,17 +19,6 @@ const MeetingHeader = () => {
   );
 
   const videoUrl = "http://localhost:3000/recordings/out.m3u8";
-
-  const sendDummyData = () => {
-    meeting.participants.broadcastMessage(
-      "ID3Data",
-      serializeData({
-        id: meeting.self.id,
-        type: "dummy",
-        data: { ...dummyData },
-      })
-    );
-  };
 
   return (
     <>
@@ -47,7 +33,6 @@ const MeetingHeader = () => {
       >
         <DyteRecordingIndicator meeting={meeting} />
         <DyteClock meeting={meeting} />
-        <DyteButton onClick={sendDummyData}>Send</DyteButton>
       </DyteHeader>
       {playRecordedSession ? (
         <VideoPlayer videoUrl={videoUrl} />

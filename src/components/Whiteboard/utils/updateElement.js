@@ -22,6 +22,7 @@ export const updatePencilElementWhenMoving = (
   meeting.participants.broadcastMessage(
     "ID3Data",
     serializeData({
+      toolType: toolTypes.PENCIL,
       data: updatedPencilElement,
       type: whiteboardEvents.UPDATE_ELEMENT,
       id: meeting.self.id,
@@ -58,6 +59,7 @@ export const updateElement = (
       meeting.participants.broadcastMessage(
         "ID3Data",
         serializeData({
+          toolType: type,
           data: updatedElement,
           id: meeting.self.id,
           type: whiteboardEvents.UPDATE_ELEMENT,
@@ -82,6 +84,7 @@ export const updateElement = (
       meeting.participants.broadcastMessage(
         "ID3Data",
         serializeData({
+          toolType: type,
           data: updatdElementCopy,
           type: whiteboardEvents.UPDATE_ELEMENT,
           id: meeting.self.id,
@@ -115,6 +118,7 @@ export const updateElement = (
       meeting.participants.broadcastMessage(
         "ID3Data",
         serializeData({
+          toolType: type,
           data: updatedTextElement,
           type: whiteboardEvents.UPDATE_ELEMENT,
           id: meeting.self.id,
